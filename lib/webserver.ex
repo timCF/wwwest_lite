@@ -41,7 +41,6 @@ defmodule WwwestLite.WebServer.Handler do
 		:cowboy_req.parse_qs(req)
 		|> Enum.reduce(%{}, fn({k,v},acc) -> Map.put(acc, Maybe.to_atom(k), v) end)
 		|> Map.merge(from_body)
-		|> IO.inspect
 		|> run_request(req)
 	end
 	#
