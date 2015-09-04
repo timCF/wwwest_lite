@@ -19,7 +19,8 @@ use Mix.Config
 		server_port: 9866, 
 		server_timeout: 20000, # timeout for all requests
 		memo_ttl: 3600000, # timeout for memorize json encode and decode
-		callback_module: WwwestLite.Example # here are handlers for requests
+		callback_module: WwwestLite.Example, # here are handlers for requests
+		handle_type: :sync # | :loop
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment

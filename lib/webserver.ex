@@ -18,7 +18,8 @@ end
 defmodule WwwestLite.WebServer.Handler do
 	use Silverb, [
 					{"@callback_module", ( res = :application.get_env(:wwwest_lite, :callback_module, nil); true = is_atom(res); res  )},
-					{"@server_timeout",  ( res = :application.get_env(:wwwest_lite, :server_timeout, nil); true = (is_integer(res) and (res > 0)); res  )}
+					{"@server_timeout",  ( res = :application.get_env(:wwwest_lite, :server_timeout, nil); true = (is_integer(res) and (res > 0)); res  )},
+					{"@handle_type", ( res = :application.get_env(:wwwest_lite, :handle_type, nil); true = (res in [:sync,:loop]); res )}
 				 ]
 	#
 	#	public
@@ -50,8 +51,13 @@ defmodule WwwestLite.WebServer.Handler do
 	#
 	defp reply(ans, req, state), do: {:ok, :cowboy_req.reply(200, [{"Content-Type","application/json; charset=utf-8"},{"connection","close"}], ans, req), state}
 	defp run_request(client_req = %{}, req) do
-		daddy = self()
-		spawn(fn() -> send(daddy, {:json, @callback_module.handle_wwwest_lite(client_req)}) end)
-		{:cowboy_loop, req, nil, @server_timeout}
+		case @handle_type do
+			:sync ->
+				reply(@callback_module.handle_wwwest_lite(client_req), req, nil)
+			:loop -> 
+				daddy = self()
+				spawn(fn() -> send(daddy, {:json, @callback_module.handle_wwwest_lite(client_req)}) end)
+				{:cowboy_loop, req, nil, @server_timeout}
+		end
 	end
 end
