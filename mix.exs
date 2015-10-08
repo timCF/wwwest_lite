@@ -22,6 +22,7 @@ defmodule WwwestLite.Mixfile do
                       :logex,
                       :maybe,
                       :exutils,
+                      :xmlex,
                       :jazz
                     ],
      mod: {WwwestLite, []}]
@@ -44,6 +45,7 @@ defmodule WwwestLite.Mixfile do
       {:logex, github: "timCF/logex"},
       {:maybe, github: "timCF/maybe"},
       {:exutils, github: "timCF/exutils"},
+      {:xmlex, github: "timCF/xmlex"},
       {:jazz, github: "meh/jazz"}
     ]
   end

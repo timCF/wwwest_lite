@@ -18,9 +18,10 @@ use Mix.Config
 	config :wwwest_lite, 
 		server_port: 9866, 
 		server_timeout: 20000, # timeout for all requests
-		memo_ttl: 3600000, # timeout for memorize json encode and decode
+		memo_ttl: 300000, # timeout for memorize json encode and decode
 		callback_module: WwwestLite.Example, # here are handlers for requests
-		handle_type: :sync # | :loop
+		handle_type: :sync, # | :loop
+		post_data_type: :json # | :xml | :any # it's data type of post q for decoding
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
