@@ -1,6 +1,9 @@
 defmodule WwwestLite do
   use Application
-  use Silverb, [{"@memo_ttl", (  res = :application.get_env(:wwwest_lite, :memo_ttl, nil); true = (is_integer(res) and (res > 0)); res  )}]
+  use Silverb,  [
+                  {"@memo_ttl", (  res = :application.get_env(:wwwest_lite, :memo_ttl, nil); true = (is_integer(res) and (res > 0)); res  )},
+                  {"@post_data_type", Application.get_env(:wwwest_lite, :post_data_type)}
+                ]
   use Logex, [ttl: 100]
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
@@ -25,7 +28,7 @@ defmodule WwwestLite do
   def decode(some), do: Tinca.memo(&Jazz.decode!/2, [some, [keys: :atoms]], @memo_ttl)
   def decode_safe(some), do: Tinca.memo(&Jazz.decode/2, [some, [keys: :atoms]], @memo_ttl)
 
-  case Application.get_env(:wwwest_lite, :post_data_type) do
+  case @post_data_type do
     :json -> 
       def decode_post(some) do 
         decode_safe(some)
