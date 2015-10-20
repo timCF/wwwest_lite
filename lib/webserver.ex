@@ -19,7 +19,8 @@ defmodule WwwestLite.WebServer.Handler do
 	use Silverb, [
 					{"@callback_module", ( res = :application.get_env(:wwwest_lite, :callback_module, nil); true = is_atom(res); res  )},
 					{"@server_timeout",  ( res = :application.get_env(:wwwest_lite, :server_timeout, nil); true = (is_integer(res) and (res > 0)); res  )},
-					{"@handle_type", Application.get_env(:wwwest_lite, :handle_type)}
+					{"@handle_type", Application.get_env(:wwwest_lite, :handle_type)},
+					{"@post_data_type", Application.get_env(:wwwest_lite, :post_data_type)}
 				 ]
 	#
 	#	public
@@ -49,7 +50,12 @@ defmodule WwwestLite.WebServer.Handler do
 	#
 	#	priv
 	#
-	defp reply(ans, req, state), do: {:ok, :cowboy_req.reply(200, [{"Content-Type","application/json; charset=utf-8"},{"connection","close"}], ans, req), state}
+	case @post_data_type do
+		:json -> defp reply_headers, do: [{"Content-Type","application/json; charset=utf-8"},{"connection","close"}]
+		:xml -> defp reply_headers, do: [{"Content-Type","text/xml; charset=utf-8"},{"connection","close"}]
+		:any -> defp reply_headers, do: [{"connection","close"}]
+	end
+	defp reply(ans, req, state), do: {:ok, :cowboy_req.reply(200, reply_headers, ans, req), state}
 	case @handle_type do
 		:sync ->
 			defp run_request(client_req = %{}, req) do
