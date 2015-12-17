@@ -14,7 +14,7 @@ defmodule WwwestLite.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications:  [  
+    [applications:  [
                       :logger,
                       :silverb,
                       :tinca,
@@ -41,7 +41,7 @@ defmodule WwwestLite.Mixfile do
     [
       {:silverb, github: "timCF/silverb"},
       {:tinca, github: "timCF/tinca"},
-      {:cowboy, github: "ninenines/cowboy", tag: "d2924de2b6a2634a40d2b57c0fdeed255f0d2acd", override: true},
+      {:cowboy, github: "ninenines/cowboy", tag: "0.9.0", override: true},
       {:logex, github: "timCF/logex"},
       {:maybe, github: "timCF/maybe"},
       {:exutils, github: "timCF/exutils"},

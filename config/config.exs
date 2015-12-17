@@ -15,12 +15,11 @@ use Mix.Config
 #       format: "$date $time [$level] $metadata$message\n",
 #       metadata: [:user_id]
 
-	config :wwwest_lite, 
-		server_port: 9866, 
-		server_timeout: 20000, # timeout for all requests
-		memo_ttl: 300000, # timeout for memorize json encode and decode
+	config :wwwest_lite,
+		server_port: 9866,
+		server_timeout: 120000, # timeout for all requests
+		memo_ttl: 60000, # timeout for memorize json encode and decode
 		callback_module: WwwestLite.Example, # here are handlers for requests
-		handle_type: :sync, # | :loop
 		post_data_type: :json # | :xml | :any # it's data type of post q for decoding
 
 # It is also possible to import configuration files, relative to this
