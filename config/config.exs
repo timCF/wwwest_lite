@@ -20,7 +20,8 @@ use Mix.Config
 		server_timeout: 120000, # timeout for all requests
 		memo_ttl: 60000, # timeout for memorize json encode and decode
 		callback_module: WwwestLite.Example, # here are handlers for requests
-		post_data_type: :json # | :xml | :any # it's data type of post q for decoding
+		post_data_type: :json, # | :xml | :any # it's data type of post q for decoding
+		crossdomain: true 
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
