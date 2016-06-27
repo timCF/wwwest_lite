@@ -29,18 +29,18 @@ defmodule WwwestLite do
   def decode_safe(some), do: Tinca.memo(&Jazz.decode/2, [some, [keys: :atoms]], @memo_ttl)
 
   case @post_data_type do
-    :json -> 
-      def decode_post(some) do 
+    :json ->
+      def decode_post(some) do
         decode_safe(some)
       end
-    :xml -> 
+    :xml ->
       def decode_post(some) do
         case Tinca.memo(&Xmlex.decode/1, [some], @memo_ttl) do
           res = %Xmlex.XML{} -> {:ok, %{post_body: res}}
           error -> {:error, error}
         end
       end
-    :any -> 
+    some when (some in [:any, :protobuf]) -> 
       def decode_post(some) do
         {:ok, %{post_body: some}}
       end
