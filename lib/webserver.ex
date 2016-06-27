@@ -58,6 +58,8 @@ defmodule WwwestLite.WebServer.Handler do
 		{:json, true} -> defp reply_headers, do: [{"Content-Type","application/json; charset=utf-8"},{"Connection","Keep-Alive"},{"Access-Control-Allow-Origin", "*"}]
 		{:xml, false} -> defp reply_headers, do: [{"Content-Type","text/xml; charset=utf-8"},{"Connection","Keep-Alive"}]
 		{:xml, true} -> defp reply_headers, do: [{"Content-Type","text/xml; charset=utf-8"},{"Connection","Keep-Alive"},{"Access-Control-Allow-Origin", "*"}]
+		{:protobuf, false} -> defp reply_headers, do: [{"Content-Type","application/x-protobuf"},{"Connection","Keep-Alive"}]
+		{:protobuf, true} -> defp reply_headers, do: [{"Content-Type","application/x-protobuf"},{"Connection","Keep-Alive"},{"Access-Control-Allow-Origin", "*"}]
 		{:any, false} -> defp reply_headers, do: [{"Connection","Keep-Alive"}]
 		{:any, true} -> defp reply_headers, do: [{"Connection","Keep-Alive"},{"Access-Control-Allow-Origin", "*"}]
 	end
